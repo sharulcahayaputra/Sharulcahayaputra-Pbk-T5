@@ -33,7 +33,7 @@
 
         <!-- Cards -->
         <div class="q-mt-xl row justify-center">
-          <q-card v-for="product in products" :key="product.name" class="my-card q-mb-xl q-pa-md col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <q-card v-for="(product, index) in products" :key="product.name" class="my-card q-mb-xl q-pa-md col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <q-img :src="product.image" :alt="product.name" class="my-card-img">
               <q-badge color="red" floating>{{ product.discount }}Flash Sale</q-badge>
             </q-img>
@@ -43,6 +43,7 @@
             </q-card-section>
             <q-card-actions align="center">
               <q-btn flat label="Add to Cart" color="primary" />
+              <q-btn flat label="Delete" color="negative" @click="deleteProduct(index)" />
             </q-card-actions>
           </q-card>
         </div>
@@ -78,15 +79,19 @@ export default {
       'https://i.pinimg.com/564x/2d/fd/cc/2dfdcc63d5495b854575b7c9354cb454.jpg',
       'https://i.pinimg.com/564x/c7/83/05/c7830525961acd46904cc6d7296a68ef.jpg'
     ];
-    const products = [
+    const products = ref([
       { name: 'Manset', price: 'Rp. 100K', image: 'https://i.pinimg.com/564x/16/4a/fb/164afb87041fedffc0581331363c4cdf.jpg'},  // Ganti dengan URL gambar Anda
       { name: 'Bola Basket', price: 'Rp. 250K', image: 'https://i.pinimg.com/564x/d3/3d/20/d33d2039267e95aa858430ba4feb0ced.jpg'},
       { name: 'Kaos kaki', price: 'Rp. 50K', image: 'https://i.pinimg.com/564x/b0/ef/8a/b0ef8acaf60a1c9781046ea1b84be01e.jpg'},
       { name: 'Tas Rajut', price: 'Rp. 85K', image: 'https://i.pinimg.com/564x/13/43/34/1343346919883f18440ff84feab9850c.jpg'}
-    ];
+    ]);
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
+    };
+
+    const deleteProduct = (index) => {
+      products.value.splice(index, 1);
     };
 
     return {
@@ -94,7 +99,8 @@ export default {
       toggleLeftDrawer,
       slide,
       carouselImages,
-      products
+      products,
+      deleteProduct
     };
   }
 };
